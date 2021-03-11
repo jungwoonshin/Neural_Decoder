@@ -101,7 +101,7 @@ def test(model, x, adj_t,split_edge, evaluator, batch_size):
         neg_test_preds += [predictor(h, edge).squeeze().cpu()]
     neg_test_pred = torch.cat(neg_test_preds, dim=0)
     results = {}
-    K_list = [10,20,30]
+    K_list = [20,50,100]
     for K in K_list:
         evaluator.K = K
         train_hits = evaluator.eval({
@@ -236,7 +236,7 @@ def run(file, data_name, model_name,lr):
     model = model.to(device)
 
     loggers = {}
-    K_list = ['10','20','30']
+    K_list = ['20','50','100']
     for k in K_list:
         loggers['Hits@'+k] = Logger(args.runs, args)
 
@@ -299,6 +299,7 @@ def run(file, data_name, model_name,lr):
 if __name__ == "__main__":
     data = ['cora','cora_ml','citeseer','pubmed']
     model_list = ['gae','gae-nd','vgae','vgae-nd','lgae','lgae-nd','sage','sage-nd','arga','arga-nd','arvga','arvga-nd','lrga','lrga-nd']
+    data = ['cora_ml','citeseer']
 
     for data_name in data:
        for model_name in model_list:
